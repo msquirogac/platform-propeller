@@ -11,6 +11,7 @@ def BeforeUpload(target, source, env):
     upload_options = {}
     if "BOARD" in env:
         upload_options = env.BoardConfig().get("upload", {})
+        env.Append(UPLOADERFLAGS=["-b", env.subst("$BOARD")])
 
     # extra upload flags
     if "extra_flags" in upload_options:
@@ -88,8 +89,7 @@ AlwaysBuild(target_size)
 env.Replace(
 	UPLOADER="propeller-load",
 	UPLOADERFLAGS=[
-		"-b", "QUICKSTART",
-		"-r",
+		"-r"
         ],
 	UPLOADCMD="$UPLOADER $UPLOADERFLAGS $SOURCE"
     )

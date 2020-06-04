@@ -1,0 +1,22 @@
+{
+  "build": {
+    "core": "p1",
+    "f_cpu": "80000000L",
+    "mcu": "P8X32A",
+    "variant": "standard"
+  },
+  "connectivity": [
+  ],
+  "frameworks": [
+  ],
+  "name": "C3",
+  "upload": {
+    "maximum_ram_size": 2048,
+    "maximum_size": 65536,
+    "require_upload_port": true,
+    "resetmethod": "dtr",
+    "speed": 115200
+  },
+  "url": "http://www.nurve.net/",
+  "vendor": "Nurve Networks"
+}

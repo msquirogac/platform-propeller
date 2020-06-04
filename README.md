@@ -25,4 +25,4 @@ board = ...
 
 # Configuration
 
-Please navigate to [documentation](http://docs.platformio.org/page/platforms/propeller.html).
+~~Please navigate to [documentation](http://docs.platformio.org/page/platforms/propeller.html).~~ TODO

@@ -12,7 +12,7 @@
 		"type": "git",
 		"url": "https://github.com/dbetz/propeller-gcc.git"
 	},
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"packageRepositories": [{
 		"toolchain-propeller": [{
 			"url": "https://github.com/msquirogac/propeller-gcc/releases/download/v1.9.0-alpha/toolchain-propeller_v1_9_0_alpha-gcc4-linux-x64.tar.gz",

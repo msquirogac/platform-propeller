@@ -1,5 +1,6 @@
 #
 # Default flags for bare-metal programming (without any framework layers)
+# https://code.google.com/archive/p/propgcc/wikis/PropGccTightMemory.wiki
 #
 
 from SCons.Script import Import
@@ -10,28 +11,31 @@ env.Append(
     ASFLAGS=["-x", "assembler-with-cpp"],
 
     CFLAGS=[
-        "-std=gnu99"
+        "-fno-exceptions"
     ],
 
     CCFLAGS=[
         "-Os",  # optimize for size
         "-Wall",  # show warnings
         "-ffunction-sections",  # place each function in its own section
-        "-fdata-sections"
+        "-fdata-sections",  # place each data item in its own section
+        "-mfcache"  # enable cache
     ],
 
     CXXFLAGS=[
-        "-std=gnu++98",
         "-fno-rtti",
         "-fno-exceptions"
     ],
 
     LINKFLAGS=[
-        "-Os",
-        "-Wl,--gc-sections"
+        "-Os"
     ],
 
-    LIBS=["m"]
+    LIBS=[
+        "m",
+        "tiny",
+        "pthread"
+    ]
 )
 
 # copy CCFLAGS to ASFLAGS (-x assembler-with-cpp mode)

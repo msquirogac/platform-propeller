@@ -3,7 +3,8 @@
 """
 
 from os.path import join
-from SCons.Script import ARGUMENTS, AlwaysBuild, Builder, Default, DefaultEnvironment
+from SCons.Script import (ARGUMENTS, COMMAND_LINE_TARGETS, AlwaysBuild,
+                          Builder, Default, DefaultEnvironment)
 
 
 def BeforeUpload(target, source, env):
@@ -21,7 +22,10 @@ def BeforeUpload(target, source, env):
     if int(ARGUMENTS.get("PIOVERBOSE", 0)):
         env.Prepend(UPLOADERFLAGS=["-v"])
 
+
 env = DefaultEnvironment()
+platform = env.PioPlatform()
+#board = env.BoardConfig()
 
 env.Replace(
     AR="propeller-elf-ar",
@@ -32,10 +36,12 @@ env.Replace(
     RANLIB="propeller-elf-ranlib",
     SIZETOOL="propeller-elf-size",
 
-    #SIZEPROGREGEXP=r"^(?:\.text|\.data)\s+(\d+).*",
-    #SIZEDATAREGEXP=r"^(?:\.data|\.bss)\s+(\d+).*",
+    ARFLAGS=["rc"],
+
+    SIZEPROGREGEXP=r"^(?:\.text|\.data)\s+(\d+).*",
+    SIZEDATAREGEXP=r"^(?:\.data|\.bss)\s+(\d+).*",
     SIZECHECKCMD="$SIZETOOL -A -d $SOURCES",
-    SIZEPRINTCMD='$SIZETOOL -A -d $SOURCES',
+    SIZEPRINTCMD='$SIZETOOL -B -d $SOURCES',
 
     PROGSUFFIX=".elf"
 )
@@ -47,19 +53,30 @@ if env.get("PROGNAME", "program") == "program":
 if not env.get("PIOFRAMEWORK"):
     env.SConscript("frameworks/_bare.py", exports="env")
 
-# The source code of "platformio-build-tool" is here
-# https://github.com/platformio/platformio-core/blob/develop/platformio/builder/tools/platformio.py
+if env.get("BUILD_FLAGS"):
+    memmode = [
+        "-mcog", "-mlmm", "-mcmm",
+        "-mxmmc", "-mxmm-single", "-mxmm-split"
+    ]
+    env.Append(LINKFLAGS=[i for i in memmode if i in env.get("BUILD_FLAGS")])
 
 #
 # Target: Build executable and linkable firmware
 #
-target_elf = env.BuildProgram()
-target_buildprog = env.Alias("buildprog", target_elf, target_elf)
+target_elf = None
+if "nobuild" in COMMAND_LINE_TARGETS:
+    target_elf = join("$BUILD_DIR", "${PROGNAME}.elf")
+    target_firm = target_elf
+else:
+    target_elf = env.BuildProgram()
+    target_firm = target_elf
+
+AlwaysBuild(env.Alias("nobuild", target_firm))
+target_buildprog = env.Alias("buildprog", target_firm, target_firm)
 
 #
 # Target: Print binary size
 #
-
 target_size = env.Alias(
     "size", target_elf,
     env.VerboseAction("$SIZEPRINTCMD", "Calculating size $SOURCE"))
@@ -68,25 +85,24 @@ AlwaysBuild(target_size)
 #
 # Target: Upload firmware
 #
-
 env.Replace(
 	UPLOADER="propeller-load",
 	UPLOADERFLAGS=[
 		"-b", "c3",
 		"-r",
         ],
-	UPLOADCMD='$UPLOADER $UPLOADERFLAGS $SOURCES'
+	UPLOADCMD="$UPLOADER $UPLOADERFLAGS $SOURCE"
     )
 
+upload_source = target_firm
 upload_actions = [
 	env.VerboseAction(BeforeUpload, "Looking for upload port..."),
 	env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")
 	]
 
-AlwaysBuild(env.Alias(["upload"], target_elf, upload_actions))
+AlwaysBuild(env.Alias("upload", upload_source, upload_actions))
 
 #
 # Setup default targets
 #
-
 Default([target_buildprog, target_size])

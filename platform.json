@@ -19,10 +19,10 @@
 			"version": "1.9.0",
 			"system": "*"
 		}],
-	"tool-propeller-loader": [{
-			"url": "https://github.com/msquirogac/propeller-gcc/releases/download/v1.9.0-alpha/tool-propeller-loader_v1_9_0_alpha-gcc4-linux-x64.tar.gz",
-			"version": "1.9.0",
-			"system": "*"
+		"tool-propeller-loader": [{
+				"url": "https://github.com/msquirogac/propeller-gcc/releases/download/v1.9.0-alpha/tool-propeller-loader_v1_9_0_alpha-gcc4-linux-x64.tar.gz",
+				"version": "1.9.0",
+				"system": "*"
 		}]
 	}],
 	"packages": {

@@ -88,7 +88,7 @@ AlwaysBuild(target_size)
 env.Replace(
 	UPLOADER="propeller-load",
 	UPLOADERFLAGS=[
-		"-b", "c3",
+		"-b", "QUICKSTART",
 		"-r",
         ],
 	UPLOADCMD="$UPLOADER $UPLOADERFLAGS $SOURCE"

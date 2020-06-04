@@ -1,7 +1,8 @@
 toggle.cc
 >compiler=C++
->memtype=cog
->optimize=-O2
+>memtype=cog cog ram
+>optimize=-Os
 >-fno-exceptions
 >-fno-rtti
+>-ltiny
 >BOARD::HUB

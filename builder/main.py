@@ -54,6 +54,7 @@ if env.get("PROGNAME", "program") == "program":
 if not env.get("PIOFRAMEWORK"):
     env.SConscript("frameworks/_bare.py", exports="env")
 
+# Copy memory mode flags to linker
 if env.get("BUILD_FLAGS"):
     memmode = [
         "-mcog", "-mlmm", "-mcmm",
@@ -84,7 +85,7 @@ target_size = env.Alias(
 AlwaysBuild(target_size)
 
 #
-# Target: Upload firmware
+# Target: Upload firmware to RAM
 #
 env.Replace(
 	UPLOADER="propeller-load",
@@ -93,14 +94,30 @@ env.Replace(
         ],
 	UPLOADCMD="$UPLOADER $UPLOADERFLAGS $SOURCE"
     )
-
 upload_source = target_firm
 upload_actions = [
 	env.VerboseAction(BeforeUpload, "Looking for upload port..."),
-	env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")
+	env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE to RAM")
 	]
+target_upload = env.Alias("upload", upload_source, upload_actions)
+AlwaysBuild(target_upload)
 
-AlwaysBuild(env.Alias("upload", upload_source, upload_actions))
+#
+# Target: Upload firmware to EEPROM
+#
+env.Replace(
+    EUPLOADER = "$UPLOADER",
+	EUPLOADERFLAGS=[
+		"$UPLOADERFLAGS", "-e"
+        ],
+	EUPLOADCMD="$EUPLOADER $EUPLOADERFLAGS $SOURCE"
+    )
+program_actions = [
+	env.VerboseAction(BeforeUpload, "Looking for upload port..."),
+	env.VerboseAction("$EUPLOADCMD", "Programming $SOURCE to EEPROM")
+	]
+target_program = env.Alias("program", target_firm, program_actions)
+AlwaysBuild(target_program)
 
 #
 # Setup default targets

@@ -1,4 +1,4 @@
-Blank Simple C++ Project.cpp
+blank.c
 >compiler=C++
 >memtype=cmm main ram compact
 >optimize=-Os

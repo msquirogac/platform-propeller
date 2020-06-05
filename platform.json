@@ -1,39 +1,32 @@
 {
-	"name": "propeller",
-	"title": "Parallax Propeller",
-	"description": "Experimental support for P1",
-	"url": "https://www.parallax.com/microcontrollers/propeller",
-	"homepage": "https://platformio.org/platforms/propeller",
-	"license": "Apache-2.0",
-	"engines": {
-		"platformio": "<5"
+	"name":"propeller",
+	"title":"Parallax Propeller",
+	"description":"Experimental support for P1",
+	"url":"https://www.parallax.com/microcontrollers/propeller",
+	"homepage":"https://platformio.org/platforms/propeller",
+	"license":"Apache-2.0",
+	"engines":{
+		"platformio":"<5"
 	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/dbetz/propeller-gcc.git"
+	"repository":{
+		"type":"git",
+		"url":"https://github.com/msquirogac/platform-propeller"
 	},
-	"version": "0.0.3",
-	"packageRepositories": [{
-		"toolchain-propeller": [{
-			"url": "https://github.com/msquirogac/propeller-gcc/releases/download/v1.9.0-alpha/toolchain-propeller_v1_9_0_alpha-gcc4-linux-x64.tar.gz",
-			"version": "1.9.0",
-			"system": "*"
-		}],
-		"tool-propeller-loader": [{
-				"url": "https://github.com/msquirogac/propeller-gcc/releases/download/v1.9.0-alpha/tool-propeller-loader_v1_9_0_alpha-gcc4-linux-x64.tar.gz",
-				"version": "1.9.0",
-				"system": "*"
-		}]
-	}],
-	"packages": {
-		"toolchain-propeller": {
-			"type": "toolchain",
-			"version": "1.9.0"
+	"version":"0.0.4",
+	"packageRepositories":[
+		"https://dl.bintray.com/platformio/dl-packages/manifest.json",
+		"http://dl.platformio.org/packages/manifest.json",
+		"https://raw.githubusercontent.com/msquirogac/platformio-propeller-package/master/manifest.json"
+	],
+	"packages":{
+		"toolchain-propeller":{
+			"type":"toolchain",
+			"version":"~1.9.0"
 		},
-		"tool-propeller-loader": {
-			"type": "uploader",
-			"optional": true,
-			"version": "1.9.0"
+		"tool-propeller-loader":{
+			"type":"uploader",
+			"optional":true,
+			"version":"~1.9.0"
 		}
 	}
 }

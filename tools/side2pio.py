@@ -44,7 +44,7 @@ def process(config, filename):
     env = config[envname]
     env['platform'] = 'propeller'
     if board:
-        env['board'] = '\n'.join(board)
+        env['board'] = ''.join(board).lower()
     if build_flags:
         env['build_flags'] = '\n'+'\n'.join(build_flags)
     if build_unflags:

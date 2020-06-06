@@ -45,7 +45,7 @@ board = ...
 
  - [x] Add support for Windows and macOS
  - [ ] Add support for GDB
- - [ ] Add SimpleIDE version of the compiles/tools
+ - [ ] Add SimpleIDE version of the compiler tools
  - [ ] Add support for **spin** to **C** convertion tools
  - [ ] Improve documentation
 

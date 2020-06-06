@@ -11,7 +11,6 @@ env.Append(
     ASFLAGS=["-x", "assembler-with-cpp"],
 
     CFLAGS=[
-        "-fno-exceptions"
     ],
 
     CCFLAGS=[
@@ -32,9 +31,6 @@ env.Append(
     ],
 
     LIBS=[
-        "m",
-        "tiny",
-        "pthread"
     ]
 )
 

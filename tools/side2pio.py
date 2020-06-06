@@ -7,7 +7,7 @@ rx_dict = {
     'compiler': re.compile(r'^(?:>compiler)=(?P<compiler>\S+).*\n'),
     'memtype':  re.compile(r'^(?:>memtype)=(?P<memtype>\S+).*\n'),
     'optimize': re.compile(r'^(?:>optimize)=(?P<optimize>\S+).*\n'),
-    'flag':     re.compile(r'^(?:>)(?P<flag>-\S+).*\n'),   
+    'flags':    re.compile(r'^(?:>)(?P<flags>-\S+).*\n'),
     'board':    re.compile(r'^(?:>BOARD):*(?P<board>\S+).*\n')
 }
 
@@ -29,12 +29,12 @@ def process(config, filename):
             line = sidefile.readline()
             if key == 'compiler':
                 None
-            if key == 'board':
-                board = [match.group(key)]
-            if key == 'optimize':
-                build_flags += [match.group(key)]
             if key == 'memtype':
                 build_flags += ["-m" + match.group(key)]
+            if key in  ['optimize', 'flags'] :
+                build_flags += [match.group(key)]
+            if key == 'board':
+                board = [match.group(key)]
 
     if not "-Os" in build_flags:
         build_unflags += ["-Os"]

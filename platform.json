@@ -12,7 +12,7 @@
 		"type":"git",
 		"url":"https://github.com/msquirogac/platform-propeller"
 	},
-	"version":"0.0.4",
+	"version":"0.0.5",
 	"packageRepositories":[
 		"https://dl.bintray.com/platformio/dl-packages/manifest.json",
 		"http://dl.platformio.org/packages/manifest.json",
@@ -21,11 +21,6 @@
 	"packages":{
 		"toolchain-propeller":{
 			"type":"toolchain",
-			"version":"~1.9.0"
-		},
-		"tool-propeller-loader":{
-			"type":"uploader",
-			"optional":true,
 			"version":"~1.9.0"
 		}
 	}

@@ -43,7 +43,7 @@ board = ...
 
 ## TODO
 
- - [ ] Add support for Windows and macOS
+ - [x] Add support for Windows and macOS
  - [ ] Add support for GDB
  - [ ] Add SimpleIDE version of the compiles/tools
  - [ ] Add support for **spin** to **C** convertion tools

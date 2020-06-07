@@ -11,6 +11,7 @@ env.Append(
     ASFLAGS=["-x", "assembler-with-cpp"],
 
     CFLAGS=[
+        "-std=gnu99"
     ],
 
     CCFLAGS=[
@@ -18,7 +19,8 @@ env.Append(
         "-Wall",  # show warnings
         "-ffunction-sections",  # place each function in its own section
         "-fdata-sections",  # place each data item in its own section
-        "-mfcache"  # enable cache
+        "-mfcache",  # enable cache
+        "-m32bit-doubles"
     ],
 
     CXXFLAGS=[

@@ -33,6 +33,7 @@ env.Replace(
     AS="propeller-elf-gcc",
     CC="propeller-elf-gcc",
     CXX="propeller-elf-g++",
+    GDB="propeller-elf-gdb",
     OBJCOPY="propeller-elf-objcopy",
     RANLIB="propeller-elf-ranlib",
     SIZETOOL="propeller-elf-size",

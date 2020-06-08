@@ -23,6 +23,9 @@ def BeforeUpload(target, source, env):
     if int(ARGUMENTS.get("PIOVERBOSE", 0)):
         env.Prepend(UPLOADERFLAGS=["-v"])
 
+    if '__PLATFORMIO_BUILD_DEBUG__' in env.get('CPPDEFINES'):
+        env.Prepend(UPLOADERFLAGS=["-g"])
+
 
 env = DefaultEnvironment()
 platform = env.PioPlatform()
@@ -48,6 +51,10 @@ env.Replace(
     PROGSUFFIX=".elf"
 )
 
+env.Replace(
+    GDBSTUB=join(platform.get_package_dir('toolchain-propeller'), 'bin', 'gdbstub')
+    )
+
 # Allow user to override via pre:script
 if env.get("PROGNAME", "program") == "program":
     env.Replace(PROGNAME="firmware")
@@ -55,7 +62,7 @@ if env.get("PROGNAME", "program") == "program":
 if not env.get("PIOFRAMEWORK"):
     env.SConscript("frameworks/_bare.py", exports="env")
 
-# Copy memory mode flags to linker
+# Pass memory mode flags to linker
 if env.get("BUILD_FLAGS"):
     memmode = [
         "-mcog", "-mlmm", "-mcmm",

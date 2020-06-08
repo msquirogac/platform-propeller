@@ -48,6 +48,7 @@ board = ...
  - [x] Add SimpleIDE version of the compiler tools
  - [ ] Add support for **spin** to **C** convertion tools
  - [ ] Improve documentation
+ - [ ] Split packages into toolchain, loader and extras
 
 ## Configuration
 

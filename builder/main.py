@@ -13,9 +13,9 @@ def BeforeUpload(target, source, env):
         upload_options = env.BoardConfig().get("upload", {})
         env.Append(UPLOADERFLAGS=["-b", env.subst("$BOARD")])
 
-    # extra upload flags
+    # Extra upload flags
     if "extra_flags" in upload_options:
-        env.Append(UPLOADERFLAGS=upload_options.get("extra_flags"))
+        env.AppendUnique(UPLOADERFLAGS=upload_options.get("extra_flags"))
 
     env.AutodetectUploadPort()
     env.Append(UPLOADERFLAGS=["-p", '"$UPLOAD_PORT"'])
@@ -23,7 +23,8 @@ def BeforeUpload(target, source, env):
     if int(ARGUMENTS.get("PIOVERBOSE", 0)):
         env.Prepend(UPLOADERFLAGS=["-v"])
 
-    if '__PLATFORMIO_BUILD_DEBUG__' in env.get('CPPDEFINES'):
+    # Enable debug mode at upload
+    if env.GetBuildType() == "debug":
         env.Prepend(UPLOADERFLAGS=["-g"])
 
 
@@ -68,7 +69,12 @@ if env.get("BUILD_FLAGS"):
         "-mcog", "-mlmm", "-mcmm",
         "-mxmmc", "-mxmm-single", "-mxmm-split"
     ]
-    env.Append(LINKFLAGS=[i for i in memmode if i in env.get("BUILD_FLAGS")])
+    env.AppendUnique(LINKFLAGS=[i for i in memmode if i in env.get("BUILD_FLAGS")])
+
+# Auto disable cache
+if env.GetBuildType() == "debug":
+    if "-mfcache" in env.get("CCFLAGS"):
+        env.get("CCFLAGS").remove("-mfcache")
 
 #
 # Target: Build executable and linkable firmware

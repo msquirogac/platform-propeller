@@ -1,15 +1,8 @@
-from platform import system
-
 from platformio.managers.platform import PlatformBase
-from platformio.util import get_systype
 
 class PropellerPlatform(PlatformBase):
 
     def configure_default_packages(self, variables, targets):
-        if not variables.get("board"):
-            return PlatformBase.configure_default_packages(
-                self, variables, targets)
-        board = self.board_config(variables.get("board"))
         return PlatformBase.configure_default_packages(self, variables,
                                                        targets)
 
@@ -38,6 +31,7 @@ class PropellerPlatform(PlatformBase):
                     "set remote hardware-breakpoint-limit 1",
                     "$INIT_BREAK"
                 ],
+                "load_cmd": "preload",
                 "onboard": True
             }
         board.manifest['debug'] = debug

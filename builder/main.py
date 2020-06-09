@@ -52,10 +52,6 @@ env.Replace(
     PROGSUFFIX=".elf"
 )
 
-env.Replace(
-    GDBSTUB=join(platform.get_package_dir('toolchain-propeller'), 'bin', 'gdbstub')
-    )
-
 # Allow user to override via pre:script
 if env.get("PROGNAME", "program") == "program":
     env.Replace(PROGNAME="firmware")

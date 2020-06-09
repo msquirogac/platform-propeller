@@ -27,7 +27,7 @@ class PropellerPlatform(PlatformBase):
                     "end",
                     "define pio_reset_run_target",
                     "end",
-                    "target remote |~/.platformio/packages/toolchain-propeller/bin/gdbstub",
+                    "target remote |~/.platformio/packages/tool-propeller-load/bin/gdbstub",
                     "set remote hardware-breakpoint-limit 1",
                     "$INIT_BREAK"
                 ],

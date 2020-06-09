@@ -44,11 +44,11 @@ board = ...
 ## TODO
 
  - [x] Add support for Windows and macOS
- - [ ] Add support for GDB
+ - [x] Add support for GDB
  - [x] Add SimpleIDE version of the compiler tools
  - [ ] Add support for **spin** to **C** convertion tools
  - [ ] Improve documentation
- - [ ] Split packages into toolchain, loader and extras
+ - [x] Split packages into toolchain, loader and ~~extras~~
 
 ## Configuration
 

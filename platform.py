@@ -21,17 +21,19 @@ class PropellerPlatform(PlatformBase):
         debug = board.manifest.get("debug", {})
         if "tools" not in debug:
             debug['tools'] = {}
+        debug_port = "|~/.platformio/packages/tool-propeller-load/bin/gdbstub"
         debug["tools"]["gdbstub"] = {
                 "init_cmds": [
                     "define pio_reset_halt_target",
                     "end",
                     "define pio_reset_run_target",
                     "end",
-                    "target remote |~/.platformio/packages/tool-propeller-load/bin/gdbstub",
+                    "target remote $DEBUG_PORT",
                     "set remote hardware-breakpoint-limit 1",
                     "$INIT_BREAK"
                 ],
                 "load_cmd": "preload",
+                "port": debug_port,
                 "onboard": True
             }
         board.manifest['debug'] = debug
